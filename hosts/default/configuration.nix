@@ -1,9 +1,17 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, nixos-hardware, ... }:
 
 let
   secrets = config.sops.secrets;
 in
 {
+  imports = [
+    # Configures the kernel and bootloader
+    # https://github.com/NixOS/nixos-hardware/blob/master/raspberry-pi/3/default.nix
+    "${nixos-hardware}/raspberry-pi/3"
+  ];
+
+
+
   # === Build ===
 
   # Disable building docs
@@ -17,8 +25,6 @@ in
 
   # Wait 3 seconds before booting
   boot.loader.timeout = 3;
-
-  # NOTE: Most bootloader settings are set by the nixos-hardware package
 
   # === Bootloader ===
 
@@ -116,7 +122,6 @@ in
 
   # Add globally available packages
   environment.systemPackages = with pkgs; [
-    # For sops secrets
     ssh-to-age
   ];
 
