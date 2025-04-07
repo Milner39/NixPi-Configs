@@ -5,34 +5,28 @@
       url = "github:NixOS/nixos-hardware";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, sops-nix, ... } @ inputs: {
+  outputs = { self, nixpkgs, ... } @ inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-
-      # Target architecture
       system = "aarch64-linux";
-
-      specialArgs = {
-        inherit sops-nix;
-      };
-
+      specialArgs = { inherit inputs; };
       modules = [
         # Configures the kernel and bootloader
         # https://github.com/NixOS/nixos-hardware/blob/master/raspberry-pi/3/default.nix
         "${inputs.nixos-hardware}/raspberry-pi/3"
 
-        # My image config
-        ./configuration.nix
-
-        # Handle encrypted secrets
-        ./secrets/.nix
+        ./hosts/default/configuration.nix
+        ./hosts/default/secrets/.nix
       ];
-
     };
   };
 }

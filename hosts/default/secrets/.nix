@@ -1,9 +1,7 @@
-{ sops-nix, ... }:
+{ inputs, ... }:
 
 {
-  imports = [
-    sops-nix.nixosModules.sops
-  ];
+  imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops = {
 
@@ -11,8 +9,6 @@
     age.sshKeyPaths = [
       "/etc/ssh/ssh_host_ed25519_key"
     ];
-
-    defaultSopsFormat = "json";
 
     # Define secrets
     secrets = {
@@ -35,5 +31,3 @@
     };
   };
 }
-
-# NOTE: see https://github.com/Mic92/sops-nix?tab=readme-ov-file#emit-plain-file-for-yaml-and-json-formats

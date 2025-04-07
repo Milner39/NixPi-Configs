@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   secrets = config.sops.secrets;
@@ -18,9 +18,7 @@ in
   # Wait 3 seconds before booting
   boot.loader.timeout = 3;
 
-  # NOTE: 
-    # Most bootloader settings are set by the nixos-hardware package,
-    # see `./flake.nix`.
+  # NOTE: Most bootloader settings are set by the nixos-hardware package
 
   # === Bootloader ===
 
@@ -44,14 +42,6 @@ in
   hardware = {
     # Enable third-party firmware (drivers)
     enableRedistributableFirmware = true;
-
-    # Or disable and add firmware manually.
-    # Some people like to add firmware explicitly but I don't see the point.
-    # enableRedistributableFirmware = lib.mkForce false;
-    # firmware = [
-    #   # Wifi & Bluetooth
-    #   pkgs.raspberrypiWirelessFirmware
-    # ];
   };
 
   # === Hardware ===
@@ -93,15 +83,14 @@ in
   # === Networking ===
 
 
-  # === Users (edit this for your own setup) ===
+  # === Users ===
 
   users.users.finnm = {
     # Automatically set various options like home directory etc.
-    # https://search.nixos.org/options?show=users.users.%3Cname%3E.isNormalUser
     isNormalUser = true;
 
     # Add to groups to elevate permissions
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" ];
 
     # Login Methods
     hashedPasswordFile = secrets."users/finnm/hashedPasswd".path;
