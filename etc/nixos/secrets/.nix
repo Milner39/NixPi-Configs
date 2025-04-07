@@ -16,13 +16,20 @@
 
     # Define secrets
     secrets = {
-      hostJson = {
-        sopsFile = ./host.json;
+      "host/wireless" = {
+        sopsFile = ./host/wireless.env;
         key = "";
+        format = "env";
       };
-      finnmJson = {
-        sopsFile = ./finnm.json;
-        key = "";
+
+      "users/finnm/hashedPasswd" = {
+        sopsFile = ./users/finnm/hashedPasswd.txt;
+        format = "binary";
+        neededForUsers = true;
+      };
+      "users/finnm/sshKeys/pc" = {
+        sopsFile = ./users/finnm/sshKeys/pc.txt;
+        format = "binary";
         neededForUsers = true;
       };
     };

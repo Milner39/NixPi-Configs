@@ -1,12 +1,7 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 
 let
-  utils = import ./utils;
-  
-  secrets = {
-    host = utils.parseJsonFile /run/secrets/hostJson;
-    finnm = utils.parseJsonFile /run/secrets-for-users/finnmJson;
-  };
+  secrets = config.sops.secrets;
 in
 {
   # === Build ===
@@ -59,9 +54,10 @@ in
     # Configure WiFi
     wireless = {
       enable = true;
+      secretsFile = secrets."host/wireless".path;
       networks = {
-        "${secrets.host.wifi.ssid}" = {
-          psk = secrets.host.wifi.psk;
+        "ext:SSID" = {
+          pskRaw = "ext:PSK";
         };
       };
     };
@@ -95,8 +91,10 @@ in
     extraGroups = ["wheel"];
 
     # Login Methods
-    hashedPassword = secrets.finnm.auth.hashedPasswd;
-    openssh.authorizedKeys.keys = secrets.finnm.auth.sshKeys;
+    hashedPasswordFile = secrets."users/finnm/hashedPasswd".path;
+    openssh.authorizedKeys.keysFiles = [
+      secrets."users/finnm/sshKeys/pc".path
+    ];
   };
 
   # === Users ===
