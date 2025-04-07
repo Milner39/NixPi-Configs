@@ -92,7 +92,7 @@ in
 
     # Login Methods
     hashedPasswordFile = secrets."users/finnm/hashedPasswd".path;
-    openssh.authorizedKeys.keysFiles = [
+    openssh.authorizedKeys.keyFiles = [
       secrets."users/finnm/sshKeys/pc".path
     ];
   };
