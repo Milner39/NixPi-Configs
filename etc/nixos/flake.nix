@@ -5,7 +5,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { nixpkgs, sops-nix ... } @ inputs: {
+  outputs = { nixpkgs, sops-nix, ... } @ inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
 
       # Target architecture

@@ -1,3 +1,3 @@
 {
-  parseJsonFile = import ./parse-json.nix
+  parseJsonFile = import ./parse-json-file.nix;
 }

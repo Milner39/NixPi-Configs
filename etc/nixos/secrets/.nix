@@ -16,13 +16,14 @@
 
     # Define secrets
     secrets = {
-      "host.json" = {
+      hostJson = {
         sopsFile = ./host.json;
         key = "";
       };
-      "finnm.json" = {
+      finnmJson = {
         sopsFile = ./finnm.json;
         key = "";
+        neededForUsers = true;
       };
     };
   };
