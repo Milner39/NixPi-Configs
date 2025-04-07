@@ -1,6 +1,24 @@
 { lib, pkgs, ... }:
 
+let
+  utils = import ./utils;
+  
+  secrets = {
+    host = utils.parseJsonFile /run/secrets/host.json;
+    finnm = utils.parseJsonFile /run/secrets-for-users/finnm.json;
+  };
+in
 {
+  # === Secrets ===
+
+  # Set which secrets are needed for user creation
+  # https://github.com/Mic92/sops-nix?tab=readme-ov-file#setting-a-users-password
+  sops.secrets."finnm.json".neededForUsers = true;
+
+  # === Secrets ===
+
+
+
   # === Build ===
 
   # Disable building docs
@@ -16,8 +34,8 @@
   boot.loader.timeout = 3;
 
   # NOTE: 
-    # Most bootloader settings are set by the nixos-hardware package.
-    # see `./flake.nix`
+    # Most bootloader settings are set by the nixos-hardware package,
+    # see `./flake.nix`.
 
   # === Bootloader ===
 
@@ -52,8 +70,8 @@
     wireless = {
       enable = true;
       networks = {
-        "${secrets."<TEMP>"}" = {
-          psk = secrets."<TEMP>";
+        "${secrets.host.wifi.ssid}" = {
+          psk = secrets.host.wifi.psk;
         };
       };
     };
@@ -87,8 +105,8 @@
     extraGroups = ["wheel"];
 
     # Login Methods
-    initialHashedPassword = secrets."<TEMP>";
-    openssh.authorizedKeys.keys = secrets."<TEMP>";
+    hashedPassword = secrets.finnm.auth.hashedPasswd;
+    openssh.authorizedKeys.keys = secrets.finnm.auth.sshKeys;
   };
 
   # === Users ===
@@ -107,7 +125,7 @@
   # === Environment ===
 
   # Add globally available packages
-  environment.systemPackages = with pkgs [
+  environment.systemPackages = with pkgs; [
     # For sops secrets
     ssh-to-age
   ]

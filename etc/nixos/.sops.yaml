@@ -4,7 +4,7 @@ keys:
   # My machine that I am using to develop these configs
   - &dev age1ez5jd5r7h90jqtkysmymac0twxvyugzhh3e2jdvzuqlhav5vsp0sgqrcsm
 
-  # NixPi itself so it can decrypt secrets I encrypt on my dev machine
+  # NixPi host public key so it can decrypt secrets I encrypt on my dev machine
   - &nixpi age1r7nnuznweq9dav8j66037mxcfwylekp9frcsem28u20573h0cu2sdnf680
 
 creation_rules:
