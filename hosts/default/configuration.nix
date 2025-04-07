@@ -56,11 +56,12 @@ in
 
   # === Performance ===
 
+  # Use RAM as compressed Swap space
   zramSwap = {
     enable = true;
     algorithm = "zstd";
     memoryPercent = 50;
-  }
+  };
 
   # === Performance ===
 
