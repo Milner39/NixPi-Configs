@@ -32,19 +32,6 @@ in
 
 
 
-  # === File Systems ===
-
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
-    };
-  };
-
-  # === File Systems ===
-
-
-
   # === Hardware ===
 
   hardware = {
