@@ -16,6 +16,7 @@
         sopsFile = ./host/wireless.env;
         key = "";
         format = "env";
+        neededForUsers = true;
       };
 
       "users/finnm/hashedPasswd" = {
