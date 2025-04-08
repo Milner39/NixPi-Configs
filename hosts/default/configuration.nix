@@ -8,6 +8,8 @@ in
     # Configures the kernel and bootloader
     # https://github.com/NixOS/nixos-hardware/blob/master/raspberry-pi/3/default.nix
     "${nixos-hardware}/raspberry-pi/3"
+
+    ./hardware-configuration.nix
   ];
 
 
@@ -135,6 +137,7 @@ in
 
   # Add globally available packages
   environment.systemPackages = with pkgs; [
+    git
     ssh-to-age
   ];
 
