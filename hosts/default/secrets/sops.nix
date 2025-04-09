@@ -15,7 +15,7 @@
       "host/wireless" = {
         sopsFile = ./host/wireless.env;
         key = "";
-        format = "env";
+        format = "dotenv";
         neededForUsers = true;
       };
 
